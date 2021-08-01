@@ -5,7 +5,7 @@
  */
 package sorting;
 
-import handler.Handler;
+import sorting.handler.Handler;
 
 /**
  *

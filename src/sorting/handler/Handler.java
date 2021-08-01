@@ -27,6 +27,9 @@ import sorting.sortingmethod.SortByIsbn;
  */
 public class Handler implements IFileHandler,IArrayHandler{
     
+    
+    private String outfile;
+    
   
     /*Main.............................................................................................................
     ...................................................................................................................
@@ -165,27 +168,14 @@ public class Handler implements IFileHandler,IArrayHandler{
     public void writefile(int option,ArrayList<Book> bookRecords) {
         
    
-        try {
-             
-            Scanner scn = new Scanner(System.in);
-            System.out.println("Enter the output file name   :");
-            String name = scn.nextLine();
-            System.out.print(getPath(name));
-            createfile(getPath(name));
-            BufferedWriter writer = new BufferedWriter(new FileWriter(getPath(name)));
-            
-            
-            
-        writingOrder(option,bookRecords);  
-       
-        writer.close();
- 
-        //Closing the resources
- 
-            
-        } catch (IOException ex) {
-            Logger.getLogger(Handler.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Enter the output file name   :");
+        outfile = scn.nextLine();
+        System.out.print(getPath(outfile));
+        createfile(getPath(outfile));
+        writingOrder(option,bookRecords);
+        
+        //Closing the resour
         
     }
 
@@ -196,7 +186,62 @@ public class Handler implements IFileHandler,IArrayHandler{
 
     @Override
     public void writingOrder(int option,ArrayList<Book> bookRecords) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(getPath(outfile)));
+            
+            switch(option){
+                case(1):
+                    writer.write("......................................sorted by title.........................\n");
+                    for (Book book : bookRecords)
+                    {
+                        writer.write(book.getTitle());
+                        
+                        writer.write("    "+book.getIsbn());
+                        
+                        //writer.write("    "+book.getAuthors());
+                        
+                        writer.write("    "+book.getEdition());
+                        
+                        writer.write("    "+book.getPrice());
+                        
+                        writer.newLine();
+                    }
+                    break;
+                case(2):
+                    writer.write("......................................sorted by Isbn.........................\n");
+                    
+                     for (Book book : bookRecords)
+                    {
+                        writer.write(""+book.getIsbn());
+                        
+                        writer.write("    "+book.getTitle());
+                          
+                        //writer.write("    "+book.getAuthors());
+                        
+                        writer.write("    "+book.getEdition());
+                        
+                        writer.write("    "+book.getPrice());
+                        
+                        writer.newLine();
+                    }
+                    break;
+                default:
+                    break;
+                    
+                    
+                    
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Handler.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                writer.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Handler.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     } 
     /*IFileHandler Methods end here....................................................................................
     ...................................................................................................................
@@ -219,6 +264,21 @@ public class Handler implements IFileHandler,IArrayHandler{
     ...................................................................................................................
     ...................................................................................................................
     */
+
+    @Override
+    public Book addBook(Book book) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteBook() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Book editeBook(Book book) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

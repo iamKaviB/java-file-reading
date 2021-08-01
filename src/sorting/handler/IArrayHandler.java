@@ -5,12 +5,17 @@
  */
 package sorting.handler;
 
+import sorting.model.Book;
+
 /**
  *
  * @author Rajeeda Dev
  */
 public interface IArrayHandler {
     
-    
+    public Book addBook(Book book);
+    public void deleteBook();
+    public Book editeBook(Book book);
+ 
     
 }
